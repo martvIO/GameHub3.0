@@ -6,7 +6,7 @@ from firebase_admin import credentials, auth, db, initialize_app
 from jose import JWTError, jwt
 
 # Initialize Firebase Admin SDK with Realtime Database URL
-cred = credentials.Certificate("firebase_admin.json")
+cred = credentials.Certificate(r"C:\Users\martv\test\GameHub3.0\api\firebase_admin.json")
 firebase_app = initialize_app(cred, {
     "databaseURL": "https://database-b81ee-default-rtdb.firebaseio.com"  # Replace with your Realtime Database URL
 })
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # JWT secret and settings
-JWT_SECRET = "your_jwt_secret"
+JWT_SECRET = "ydawdawdawdawwaq"
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_MINUTES = 60
 
