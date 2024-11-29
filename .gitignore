@@ -1,0 +1,11 @@
+# Ignore virtual environment
+.venv/
+
+# Ignore VS Code workspace settings
+.vscode/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore environment variables
+.env

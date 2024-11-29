@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".", // Base directory for relative paths
+    "paths": {
+      "@/*": ["src/*"] // Alias '@/' maps to 'src/'
+    },
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
