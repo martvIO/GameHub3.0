@@ -122,3 +122,4 @@ def test_get_user_invalid_token():
     response = client.get("/get_user", headers=headers)
     assert response.status_code == 401
     assert response.json()["detail"] == "Token is invalid"
+
