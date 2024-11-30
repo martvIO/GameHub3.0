@@ -20,7 +20,17 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.12
-
+          - uses: actions/checkout@v4
+    - id: quality-gate
+      uses: EffectiveRange/python-verify-github-action@v1
+      with:
+        python-version: '3.12'
+        coverage-threshold: '95'
+        add-coverage-comment: 'true'
+    - run: echo "Current code coverage is $COVERAGE_PERCENT%"
+      shell: bash
+      env:
+        COVERAGE_PERCENT: ${{ steps.quality-gate.outputs.coverage }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip 
