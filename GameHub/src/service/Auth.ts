@@ -32,7 +32,7 @@ export async function login(email,password) {
       console.log('Login Response:', response);
   
       // Save the token in a cookie
-      setCookie('access_token', response.access_token, 7); // Save for 7 days
+      setCookie('token', response.token, 7); // Save for 7 days
       console.log('Token saved to cookies');
     } catch (error) {
       console.error('Error during login:', error);

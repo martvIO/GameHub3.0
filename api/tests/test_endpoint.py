@@ -1,125 +1,132 @@
 import pytest
 from fastapi.testclient import TestClient
-from firebase_admin import db
-from api.main import app
+from api.main import app, hash_password, get_firebase_ref
 
 client = TestClient(app)
 
-# Mock Firebase Database
-class MockDatabaseReference:
-    def __init__(self):
-        self.data = {}
-
-    def get(self):
-        return self.data
-
-    def push(self, user_data):
-        user_id = f"user_{len(self.data) + 1}"
-        self.data[user_id] = user_data
-        return MockUserReference(user_id)
-
-class MockUserReference:
-    def __init__(self, user_id):
-        self.key = user_id
-
-@pytest.fixture(autouse=True)
-def mock_firebase(monkeypatch):
-    mock_ref = MockDatabaseReference()
-
-    def mock_reference(path):
-        return mock_ref
-
-    monkeypatch.setattr(db, "reference", mock_reference)
-
+# Test signup endpoint
 def test_signup_user():
-    """Test user signup."""
     payload = {
         "username": "testuser",
-        "email": "testuser@example.com",
-        "password": "securepassword123"
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "password": "securepassword"
     }
 
     response = client.post("/signup", json=payload)
     assert response.status_code == 200
-    assert response.json()["message"] == "User registered successfully"
+    assert response.json() == {"message": "User created successfully!"}
 
-    # Verify user is stored in the mock database
-    users = db.reference("/users").get()
-    assert len(users) == 1
-    assert "testuser@example.com" in [user["email"] for user in users.values()]
+    # Verify user is added to Firebase
+    users_ref = get_firebase_ref("users")
+    user_data = users_ref.child("testuser").get()
+    assert user_data["email"] == "john.doe@example.com"
+    assert "hashed_password" in user_data
 
-def test_signup_duplicate_email():
-    """Test signup with a duplicate email."""
+def test_signup_existing_username():
+    # Ensure the user exists in Firebase
+    users_ref = get_firebase_ref("users")
+    users_ref.child("existinguser").set({
+        "first_name": "Existing",
+        "last_name": "User",
+        "email": "existing.user@example.com",
+        "hashed_password": hash_password("password")
+    })
+
     payload = {
-        "username": "testuser",
-        "email": "testuser@example.com",
-        "password": "securepassword123"
+        "username": "existinguser",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "new.email@example.com",
+        "password": "securepassword"
     }
 
-    # First signup
-    client.post("/signup", json=payload)
-
-    # Duplicate signup
     response = client.post("/signup", json=payload)
     assert response.status_code == 400
-    assert response.json()["detail"] == "Email already exists"
+    assert response.json()["detail"] == "Username already registered"
 
+def test_signup_existing_email():
+    # Ensure the user exists in Firebase
+    users_ref = get_firebase_ref("users")
+    users_ref.child("newuser").set({
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "hashed_password": hash_password("password")
+    })
+
+    payload = {
+        "username": "anotheruser",
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "password": "securepassword"
+    }
+
+    response = client.post("/signup", json=payload)
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Email already registered"
+
+# Test login endpoint
 def test_login_user():
-    """Test user login."""
-    # Sign up a test user
-    signup_payload = {
-        "username": "testuser",
-        "email": "testuser@example.com",
-        "password": "securepassword123"
-    }
-    client.post("/signup", json=signup_payload)
+    # Ensure the user exists in Firebase
+    users_ref = get_firebase_ref("users")
+    users_ref.child("testuser").set({
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "hashed_password": hash_password("securepassword")
+    })
 
-    # Login the user
-    login_payload = {
-        "email": "testuser@example.com",
-        "password": "securepassword123"
+    payload = {
+        "email": "john.doe@example.com",
+        "password": "securepassword"
     }
-    response = client.post("/login", json=login_payload)
+
+    response = client.post("/login", json=payload)
     assert response.status_code == 200
     assert "token" in response.json()
 
 def test_login_invalid_credentials():
-    """Test login with invalid credentials."""
-    login_payload = {
-        "email": "nonexistent@example.com",
+    payload = {
+        "email": "invalid.user@example.com",
         "password": "wrongpassword"
     }
-    response = client.post("/login", json=login_payload)
+
+    response = client.post("/login", json=payload)
     assert response.status_code == 401
     assert response.json()["detail"] == "Invalid email or password"
 
 def test_get_user():
-    """Test retrieving user information."""
-    # Sign up and login a user
-    signup_payload = {
-        "username": "testuser",
-        "email": "testuser@example.com",
-        "password": "securepassword123"
-    }
-    client.post("/signup", json=signup_payload)
+    # Ensure the user exists in Firebase
+    users_ref = get_firebase_ref("users")
+    users_ref.child("testuser").set({
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "hashed_password": hash_password("securepassword")
+    })
 
-    login_payload = {
-        "email": "testuser@example.com",
-        "password": "securepassword123"
-    }
-    login_response = client.post("/login", json=login_payload)
-    token = login_response.json()["token"]
+    # Generate a token by logging in
+    login_response = client.post("/login", json={
+        "email": "john.doe@example.com",
+        "password": "securepassword"
+    })
+    assert login_response.status_code == 200, f"Error: {login_response.json()}"
+    token = login_response.json().get("token")
+    print(token,response)
+    assert token, "Login did not return a token"
 
-    # Get user info
+    # Fetch user info
     headers = {"Authorization": f"Bearer {token}"}
     response = client.get("/get_user", headers=headers)
-    assert response.status_code == 200
-    assert response.json()["email"] == "testuser@example.com"
+    assert response.status_code == 200, f"Error: {response.json()}"
+    assert response.json().get('email') == "john.doe@example.com"
+    assert "hashed_password" not in response.json()
 
 def test_get_user_invalid_token():
-    """Test retrieving user information with an invalid token."""
     headers = {"Authorization": "Bearer invalid_token"}
     response = client.get("/get_user", headers=headers)
     assert response.status_code == 401
     assert response.json()["detail"] == "Token is invalid"
-

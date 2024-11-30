@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Gamepad2, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { signup } from '@/service/Auth';
 
 const signupSchema = z
   .object({
@@ -26,6 +27,7 @@ export const SignupPage = () => {
 
   const onSubmit = (data: any) => {
     console.log(data);
+    signup(data['username'],data['email'],data['password']);
   };
 
   return (
