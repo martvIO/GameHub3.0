@@ -48,8 +48,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # Pydantic models
 class SignupRequest(BaseModel):
     username: str
-    first_name: str
-    last_name: str
     email: EmailStr
     password: str
 
