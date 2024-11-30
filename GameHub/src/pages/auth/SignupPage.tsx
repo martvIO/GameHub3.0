@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Gamepad2, Upload } from 'lucide-react';
+import { Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { signup } from '@/service/Auth';
@@ -21,14 +21,29 @@ const signupSchema = z
   });
 
 export const SignupPage = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    signup(data['username'],data['email'],data['password']);
-  };
+  const onSubmit = async (data: any) => {
+    setErrorMessage(null);
+    try {
+      const response = await signup(data['username'], data['email'], data['password']);
+      
+      if (response.success) {
+        setErrorMessage(null); // Clear any previous error message on success
+        console.log('Signup successful:', response.message);
+        // Optionally, redirect or show a success message
+        navigator
+      } else {
+        setErrorMessage(response.message); // Show the error message from the signup function
+      }
+    } catch (error: any) {
+      setErrorMessage('An unexpected error occurred. Please try again later.');
+      console.error('Signup error:', error.message || error);
+    }
+  };  
 
   return (
     <div className="min-h-screen bg-gray-900 dark:bg-gray-100 flex items-center justify-center px-4">
@@ -54,36 +69,35 @@ export const SignupPage = () => {
             <Input
               placeholder="Username"
               {...register('username')}
-              error={errors.username?.message.toString() || ''}
+              error={errors.username?.message?.toString() || ''}
               className="bg-gray-800 dark:bg-gray-200 text-gray-100 dark:text-gray-900"
             />
             <Input
               type="email"
               placeholder="Email address"
               {...register('email')}
-              error={errors.email?.message.toString() || ''}
+              error={errors.email?.message?.toString() || ''}
               className="bg-gray-800 dark:bg-gray-200 text-gray-100 dark:text-gray-900"
             />
             <Input
               type="password"
               placeholder="Password"
               {...register('password')}
-              error={errors.password?.message.toString() || ''}
+              error={errors.password?.message?.toString() || ''}
               className="bg-gray-800 dark:bg-gray-200 text-gray-100 dark:text-gray-900"
             />
             <Input
               type="password"
               placeholder="Confirm password"
               {...register('confirmPassword')}
-              error={errors.confirmPassword?.message.toString() || ''}
+              error={errors.confirmPassword?.message?.toString() || ''}
               className="bg-gray-800 dark:bg-gray-200 text-gray-100 dark:text-gray-900"
             />
-            <div className="flex items-center justify-center">
-            </div>
           </div>
 
-          {errors.terms && (
-            <p className="text-sm text-red-500">{errors.terms.message.toString() || ''}</p>
+          {/* Error message display */}
+          {errorMessage && (
+            <p className="text-sm text-red-500 text-center">{errorMessage}</p>
           )}
 
           <Button
