@@ -3,7 +3,8 @@ import logging
 from fastapi import FastAPI, HTTPException, Depends, Header
 from pydantic import BaseModel, EmailStr
 from firebase_admin import credentials, auth, db, initialize_app
-from jose import JWTError, jwt
+from jose import JWTError, jwt, ExpiredSignatureError
+from datetime import timezone
 
 # Initialize Firebase Admin SDK with Realtime Database URL
 cred = credentials.Certificate(r"C:\Users\martv\test\GameHub3.0\api\firebase_admin.json")
@@ -17,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # FastAPI app
-app = FastAPI()
+app = FastAPI(debug=True)
 
 # JWT secret and settings
 JWT_SECRET = "ydawdawdawdawwaq"
@@ -37,7 +38,7 @@ class LoginRequest(BaseModel):
 # Helper functions
 def create_jwt_token(email: str):
     """Generate a JWT token for a user."""
-    expiration = datetime.utcnow() + timedelta(minutes=JWT_EXPIRATION_MINUTES)
+    expiration = datetime.now(timezone.utc) + timedelta(minutes=JWT_EXPIRATION_MINUTES)
     payload = {"sub": email, "exp": expiration}
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     logger.info(f"JWT token created for {email}")
@@ -49,12 +50,9 @@ def verify_jwt_token(token: str):
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         logger.info(f"Token verified for {payload['sub']}")
         return payload["sub"]
-    except jwt.ExpiredSignatureError:
-        logger.warning("Token expired")
-        raise HTTPException(status_code=401, detail="Token expired")
-    except jwt.InvalidTokenError:
-        logger.error("Invalid token")
-        raise HTTPException(status_code=401, detail="Invalid token")
+    except :
+        logger.warning("Token is invalid")
+        raise HTTPException(status_code=401, detail="Token is invalid")
 
 # Endpoints
 @app.post("/signup")
