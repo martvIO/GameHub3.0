@@ -7,7 +7,7 @@ from jose import JWTError, jwt, ExpiredSignatureError
 from datetime import timezone
 
 # Initialize Firebase Admin SDK with Realtime Database URL
-cred = credentials.Certificate(r"C:\Users\martv\test\GameHub3.0\api\firebase_admin.json")
+cred = credentials.Certificate("firebase_admin.json")
 firebase_app = initialize_app(cred, {
     "databaseURL": "https://database-b81ee-default-rtdb.firebaseio.com"  # Replace with your Realtime Database URL
 })
