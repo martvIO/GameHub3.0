@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-
+import { login } from '@/service/Auth';
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
@@ -20,6 +20,7 @@ export const LoginPage = () => {
 
   const onSubmit = (data: any) => {
     console.log(data);
+    login(data['email'],data['password']);
   };
 
   return (

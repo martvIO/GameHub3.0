@@ -18,7 +18,7 @@ function getCookie(name: string): string | null {
   }
 
 
-async function login(email,password) {
+export async function login(email,password) {
     try {
       const requestData = {
         "email": email,
@@ -40,7 +40,7 @@ async function login(email,password) {
   }
   
 
-  async function signup(username,email,password) {
+export async function signup(username,email,password) {
     try {
         const signupData = {
             "username": username,
