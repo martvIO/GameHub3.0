@@ -9,3 +9,7 @@ node_modules/
 
 # Ignore environment variables
 .env
+
+__pycache__/
+
+.pytest_cache/
