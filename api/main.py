@@ -104,8 +104,7 @@ async def signup(user: SignupRequest):
     # Hash the password and save user data
     hashed_password = hash_password(user.password)
     user_data = {
-        "first_name": user.first_name,
-        "last_name": user.last_name,
+        "username": user.username,
         "email": user.email,
         "hashed_password": hashed_password
     }
