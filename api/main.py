@@ -92,7 +92,7 @@ def get_user_by_username(username: str) -> Optional[dict]:
 @app.post("/signup")
 async def signup(user: SignupRequest):
     users_ref = get_firebase_ref("users")
-
+    print(user.username)
     # Check if username or email already exists
     if get_user_by_username(user.username):
         raise HTTPException(status_code=400, detail="Username already registered")
