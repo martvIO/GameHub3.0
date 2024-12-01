@@ -3,29 +3,23 @@ import { motion } from 'framer-motion';
 import { Star, TrendingUp, Users } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
+import wodle_image from '../assets/img/wordle.png';
 
 const featuredGames = [
   {
     id: 1,
-    title: "Cyber Legends",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    title: "Wordle",
+    image: wodle_image,
     rating: 4.8,
-    category: "Action RPG",
+    category: "word guesser",
   },
   {
     id: 2,
-    title: "Space Warriors",
-    image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=800&q=80",
-    rating: 4.6,
-    category: "Strategy",
-  },
-  {
-    id: 3,
-    title: "Medieval Quest",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
+    title: "The password game",
+    image: "https://images.unsplash.com/photo-1633265486064-086b219458ec?auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
-    category: "Adventure",
-  },
+    category: "password",
+  }
 ];
 
 const fadeInUp = {
