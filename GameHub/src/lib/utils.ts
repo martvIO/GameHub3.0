@@ -12,3 +12,14 @@ export function formatDate(date: string) {
     day: 'numeric',
   });
 }
+
+// lib/utils.ts
+export const formatTime = (time: number): string => {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
+
+export function generateRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

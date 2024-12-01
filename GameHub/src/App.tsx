@@ -11,6 +11,7 @@ import { PasswordGamePage } from '@/pages/games/PasswordGamePage';
 import { WordlePage } from '@/pages/games/WordlePage';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
 import { MemoryCardGamePage } from '@/pages/games/MemoryCardGamePage';
+import {NumberGuessingGame} from '@/pages/games/NumberGuesserPage';
 
 function App() {
   const { theme } = useTheme();
@@ -29,6 +30,7 @@ function App() {
               <Route path="/games/password-game" element={<PasswordGamePage />} />
               <Route path="/games/wordle" element={<WordlePage />} />
               <Route path="/games/memory-card-game" element={<MemoryCardGamePage />} />
+              <Route path="/games/number-guesser" element={<NumberGuessingGame/>} />
             </Routes>
             <Toaster
               position="top-right"

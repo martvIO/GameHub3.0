@@ -1,13 +1,14 @@
+// components/Games/password-game/PasswordGamePage.tsx
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Lock } from 'lucide-react';
-import { toast } from 'react-hot-toast';
-import { PasswordInput } from '@/components/password-game/PasswordInput';
-import { RulesList } from '@/components/password-game/RulesList';
-import { passwordRules } from '@/lib/password-rules';
+import { HeroSection } from '@/components/Games/password-game/HeroSection';
+import { ProgressBar } from '@/components/Games/password-game/ProgressBar';
+import { PasswordInput } from '@/components/Games/password-game/PasswordInput';
+import { RulesList } from '@/components/Games/password-game/RulesList';
 import { Button } from '@/components/ui/Button';
-
-export const PasswordGamePage = () => {
+import { passwordRules } from '@/lib/password-rules';
+import { validatePassword } from '@/lib/password-utils';
+export const PasswordGamePage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [activeRules, setActiveRules] = useState(passwordRules.slice(0, 1));
   const [errors, setErrors] = useState<string[]>([]);
@@ -15,39 +16,11 @@ export const PasswordGamePage = () => {
   // Calculate progress percentage
   const progressPercentage = (activeRules.length / passwordRules.length) * 100;
 
-  const validatePassword = useCallback(
-    (value: string) => {
-      const newErrors: string[] = [];
-
-      // Check all active rules
-      const allRulesCompleted = activeRules.every((rule) => {
-        const isValid = rule.validator(value);
-        if (!isValid) {
-          newErrors.push(rule.errorMessage);
-        }
-        return isValid;
-      });
-
-      setErrors(newErrors);
-
-      // Only add a new rule if all current rules are completed
-      if (allRulesCompleted && activeRules.length < passwordRules.length) {
-        const nextRule = passwordRules[activeRules.length];
-        setActiveRules((prev) => [...prev, nextRule]);
-        toast.success('New rule unlocked!', {
-          icon: '🎉',
-          duration: 2000,
-        });
-      }
-    },
-    [activeRules]
-  );
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    validatePassword(value);
-  };
+    validatePassword(value, activeRules, setActiveRules, setErrors);
+  }, [activeRules]);
 
   return (
     <div className="min-h-screen bg-gray-900 dark:bg-gray-100 py-16 px-4">
@@ -58,37 +31,10 @@ export const PasswordGamePage = () => {
         className="max-w-2xl mx-auto space-y-8"
       >
         {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-4"
-        >
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 dark:bg-purple-400/10 mb-4">
-            <Lock className="w-8 h-8 text-purple-500 dark:text-purple-400" />
-          </div>
-          <h1 className="text-4xl font-bold text-white dark:text-gray-900">
-            The Password Game
-          </h1>
-          <p className="text-gray-400 dark:text-gray-500 max-w-lg mx-auto">
-            Create a password that meets all the requirements. But be careful - new rules will appear as you progress!
-          </p>
-        </motion.div>
+        <HeroSection />
 
         {/* Progress Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full bg-gray-800 dark:bg-gray-300 rounded-full h-4 mb-6"
-        >
-          <motion.div
-            className="bg-purple-600 dark:bg-purple-500 h-full rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${progressPercentage}%` }}
-            transition={{ duration: 0.8 }}
-          />
-        </motion.div>
+        <ProgressBar progressPercentage={progressPercentage} />
 
         {/* Password Input Section */}
         <motion.div
