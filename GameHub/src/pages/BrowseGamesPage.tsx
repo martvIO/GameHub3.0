@@ -2,14 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
-import wodle_image from '../assets/img/wordle.png';
+import wordle_image from '../assets/img/wordle.png';
 
 const games = [
   {
     id: 'wordle',
     title: 'Wordle',
     description: 'Guess the hidden word in 6 tries.',
-    image: wodle_image,
+    image: wordle_image,
     category: 'Word Game',
     rating: 4.8,
   },

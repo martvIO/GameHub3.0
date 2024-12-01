@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 import { Star, TrendingUp, Users } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import wodle_image from '../assets/img/wordle.png';
+import wordle from '../assets/img/wordle.png';
 
 const featuredGames = [
   {
     id: 1,
     title: "Wordle",
-    image: wodle_image,
+    image: wordle,
     rating: 4.8,
     category: "word guesser",
   },
