@@ -21,6 +21,14 @@ const games = [
     category: 'Puzzle',
     rating: 4.7,
   },
+  {
+    id: 'memory-card-game',
+    title: 'Memory Card Game',
+    description: 'Match the pairs of icons.',
+    image: 'https://images.unsplash.com/photo-1581091870621-1f9d9a3c8c8e?auto=format&fit=crop&w=800&q=80',
+    category: 'Puzzle',
+    rating: 4.6,
+  },
 ];
 
 // Animation Variants

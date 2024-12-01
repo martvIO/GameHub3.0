@@ -8,3 +8,4 @@ export interface Game {
   releaseDate: string;
   publisher: string;
 }
+
