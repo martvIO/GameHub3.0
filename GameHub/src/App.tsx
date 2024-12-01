@@ -30,7 +30,7 @@ function App() {
               <Route path="/games/password-game" element={<PasswordGamePage />} />
               <Route path="/games/wordle" element={<WordlePage />} />
               <Route path="/games/memory-card-game" element={<MemoryCardGamePage />} />
-              <Route path="/games/number-guesser" element={<NumberGuessingGame/>} />
+              <Route path="/games/number-guessing" element={<NumberGuessingGame/>} />
             </Routes>
             <Toaster
               position="top-right"

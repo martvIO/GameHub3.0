@@ -1,6 +1,7 @@
 // components/Games/memory-card-game/WinModal.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import { playWinSound } from '@/hooks/useSound';
 
 interface WinModalProps {
   moves: number;
@@ -9,7 +10,9 @@ interface WinModalProps {
   onHome: () => void;
 }
 
-export const WinModal: React.FC<WinModalProps> = ({ moves, time, onReplay, onHome }) => (
+export const WinModal: React.FC<WinModalProps> = ({ moves, time, onReplay, onHome }) => {
+    playWinSound();
+    return (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -37,4 +40,4 @@ export const WinModal: React.FC<WinModalProps> = ({ moves, time, onReplay, onHom
       </div>
     </motion.div>
   </div>
-);
+)};

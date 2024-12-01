@@ -8,6 +8,7 @@ import { Stats } from '@/components/Games/memory-card-game/Stats';
 import { GameGrid } from '@/components/Games/memory-card-game/GameGrid';
 import { WinModal } from '@/components/Games/memory-card-game/WinModal';
 import { formatTime } from '@/lib/utils';
+import { playWinSound } from '@/hooks/useSound';
 
 const icons: IconType[] = [FaApple, FaAndroid, FaWindows, FaLinux, FaReact, FaVuejs, FaAngular, FaNodeJs, GiGamepad, GiChessKnight];
 const shuffledIcons = [...icons, ...icons].sort(() => Math.random() - 0.5);
@@ -40,6 +41,7 @@ export const MemoryCardGamePage: React.FC = () => {
 
   useEffect(() => {
     if (matchedCards.length === icons.length * 2) setTimerRunning(false);
+    playWinSound();
   }, [matchedCards]);
 
   const handleCardClick = (index: number) => {

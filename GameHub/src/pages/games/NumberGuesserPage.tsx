@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { GameEndModal } from '@/components/ui/GameEndModal';
 import { useNumberGuessingGame } from '@/hooks/useNumberGuessingGame';
 import { InputControls } from '@/components/Games/number-guessing/Controls';
+import { ArrowUp10 } from 'lucide-react';
 
 export const NumberGuessingGame: React.FC = () => {
   const {
@@ -18,6 +19,7 @@ export const NumberGuessingGame: React.FC = () => {
   } = useNumberGuessingGame();
 
   return (
+    <>  
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -30,6 +32,11 @@ export const NumberGuessingGame: React.FC = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="max-w-md w-full bg-gray-800 dark:bg-white rounded-lg p-6 shadow-lg text-center"
       >
+        <div className="text-center space-y-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 dark:bg-purple-400/10 mb-4">
+            <ArrowUp10 className="w-8 h-8 text-purple-500 dark:text-purple-400" />
+            </div>
+        </div>
         <h1 className="text-3xl font-bold mb-4">Number Guessing Game</h1>
         <p className="text-gray-400 dark:text-gray-600 mb-6">Guess the number between 1 and 100</p>
         
@@ -56,5 +63,6 @@ export const NumberGuessingGame: React.FC = () => {
         />
       )}
     </motion.div>
+    </>
   );
 };

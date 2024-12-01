@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
-import wordle_image from '../assets/img/wordle.png';
-
+import wordle_image from '@/assets/img/wordle.png';
+import number_guesser from '@/assets/img/number_guesser.jpeg';
+import memory_card from '@/assets/img/meomry_card.jpeg';
 const games = [
   {
     id: 'wordle',
@@ -25,10 +26,18 @@ const games = [
     id: 'memory-card-game',
     title: 'Memory Card Game',
     description: 'Match the pairs of icons.',
-    image: 'https://images.unsplash.com/photo-1581091870621-1f9d9a3c8c8e?auto=format&fit=crop&w=800&q=80',
+    image: memory_card,
     category: 'Puzzle',
     rating: 4.6,
   },
+  {
+    id: 'number-guessing',
+    title: 'Number Guessing Game',
+    description: 'Match the pairs of icons.',
+    image: number_guesser,
+    category: 'Guess The Number',
+    rating: 5.0,
+  }
 ];
 
 // Animation Variants
