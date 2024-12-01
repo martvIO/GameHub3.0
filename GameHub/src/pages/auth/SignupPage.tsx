@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -25,8 +25,9 @@ export const SignupPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(signupSchema),
   });
+  const navigate = useNavigate();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data) => {
     setErrorMessage(null);
     try {
       const response = await signup(data['username'], data['email'], data['password']);
@@ -34,12 +35,12 @@ export const SignupPage = () => {
       if (response.success) {
         setErrorMessage(null); // Clear any previous error message on success
         console.log('Signup successful:', response.message);
-        // Optionally, redirect or show a success message
-        navigator
+        // navigate to the home page when the submit is successful
+        navigate('/home');
       } else {
         setErrorMessage(response.message); // Show the error message from the signup function
       }
-    } catch (error: any) {
+    } catch (error) {
       setErrorMessage('An unexpected error occurred. Please try again later.');
       console.error('Signup error:', error.message || error);
     }
