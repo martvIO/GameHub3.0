@@ -18,16 +18,7 @@ export const InputControls: React.FC<InputControlsProps> = ({ guess, setGuess })
         onChange={(e) => setGuess(Number(e.target.value))}
         className="w-20 p-2 text-center text-black dark:text-gray-900 border border-gray-400 dark:border-gray-700 focus:outline-none appearance-none"
       />
-      {[1, 5, 10].map((val) => (
-        <motion.button
-          key={val}
-          whileHover={{ scale: 1.1 }}
-          className="px-3 py-2 bg-gray-700 dark:bg-gray-200 text-white dark:text-black hover:bg-gray-600 dark:hover:bg-gray-300"
-          onClick={() => adjustGuess(val)}
-        >
-          {`+${val}`}
-        </motion.button>
-      ))}
+      <Buttons KeyLists={[1,5,10]} setGuess={setGuess}></Buttons>
     </div>
   );
 };
