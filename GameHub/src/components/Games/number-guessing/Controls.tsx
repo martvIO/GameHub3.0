@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import { Buttons } from '@/components/Games/number-guessing/Buttons';
 interface InputControlsProps {
   guess: number;
   setGuess: React.Dispatch<React.SetStateAction<number>>;
@@ -11,16 +11,7 @@ export const InputControls: React.FC<InputControlsProps> = ({ guess, setGuess })
 
   return (
     <div className="flex items-center justify-center mb-4">
-      {[-10, -5, -1].map((val) => (
-        <motion.button
-          key={val}
-          whileHover={{ scale: 1.1 }}
-          className="px-3 py-2 bg-gray-700 dark:bg-gray-200 text-white dark:text-black hover:bg-gray-600 dark:hover:bg-gray-300"
-          onClick={() => adjustGuess(val)}
-        >
-          {val}
-        </motion.button>
-      ))}
+      <Buttons KeyLists={[-1,-5,-10]} setGuess={setGuess}></Buttons>
       <motion.input
         type="number"
         value={guess}
