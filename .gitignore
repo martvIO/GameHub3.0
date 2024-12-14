@@ -15,7 +15,6 @@ __pycache__/
 .pytest_cache/
 /api/tests/__pycache__/
 /api/__pycache__/
-api/firebase_admin.json
 
 # Logs
 logs
@@ -41,3 +40,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/firebase_admin.json

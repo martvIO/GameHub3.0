@@ -119,3 +119,58 @@ export async function signup(username: string, email: string, password: string) 
     };
   }
 }
+
+export async function logout() {
+  try {
+    // Clear the token cookie
+    setCookie('token', '', -1);
+    return { success: true, message: "Logout successful." };
+  } catch (error: any) {
+    console.error('Unexpected Error during logout:', error.message || error);
+    return {
+      success: false,
+      message: error.message || "An unexpected error occurred.",
+      statusCode: 0, // Indicates network or other failure
+    };
+  }
+}
+
+export async function getUserProfile() {
+  try {
+    // Retrieve the token from cookies
+    const token = getCookie('token');
+    if (!token) {
+      return {
+        success: false,
+        message: 'Authorization token not found. Please log in.',
+      };
+    }
+
+    // Make the GET request to fetch the user profile
+    const response = await client.get('/get_user', undefined, {
+      accept: 'application/json',
+      authorization: token, // Attach the token in the authorization header
+    });
+
+    if (response.success) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    } else {
+      // Handle API errors (e.g., token expired or user not found)
+      return {
+        success: false,
+        message: response.error?.detail || 'Failed to fetch user profile.',
+        statusCode: response.statusCode,
+      };
+    }
+  } catch (error: any) {
+    console.error('Unexpected Error during getUserProfile:', error.message || error);
+    return {
+      success: false,
+      message: error.message || 'An unexpected error occurred while fetching the user profile.',
+      statusCode: 0, // Indicates a network or unexpected failure
+    };
+  }
+}
