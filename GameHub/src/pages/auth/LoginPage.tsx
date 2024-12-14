@@ -28,7 +28,6 @@ export const LoginPage: React.FC = () => {
             Sign in to your account to continue
           </p>
         </div>
-
         <SigninForm/>
       </div>
     </div>

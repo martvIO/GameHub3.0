@@ -22,7 +22,8 @@ export const SigninForm: React.FC = () => {
         if (response.success) {
           console.log('Login successful:', response.message);
           // Navigate to home or dashboard page on successful login
-          navigate('/home');
+          navigate('/');
+          window.location.reload(); // Force a page refresh
         } else {
           // Display error message returned from the API
           setErrorMessage(response.message);

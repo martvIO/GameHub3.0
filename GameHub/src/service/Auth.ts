@@ -174,3 +174,8 @@ export async function getUserProfile() {
     };
   }
 }
+
+export async function checkIfUserIsLoggedIn(){
+  const token = getCookie('token');
+  return token ? true : false;
+}

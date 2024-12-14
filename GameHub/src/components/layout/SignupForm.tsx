@@ -21,7 +21,8 @@ export const SignupForm: React.FC = () => {
 
       if (response.success) {
         console.log('Signup successful:', response.message);
-        navigate('/home');
+        navigate('/');
+        window.location.reload(); // Force a page refresh
       } else {
         setErrorMessage(response.message);
       }
