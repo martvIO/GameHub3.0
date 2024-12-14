@@ -40,4 +40,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+firebase_admin.json
 /firebase_admin.json
