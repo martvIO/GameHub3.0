@@ -126,8 +126,8 @@ export const passwordRules = [
     id: 12,
     description: "The password should include at least one Roman numeral",
     validator: (password: string) => {
-      const romanRegex = /\b[I|V|X|L|C|D|M]+\b/i;
-      return romanRegex.test(password);
+      const romanRegex = ["I","V","X","L","C","D","M"];
+      return romanRegex.some((char) => password.includes(char));
     },
     errorMessage: "Password must include at least one Roman numeral (e.g., I, V, X)",
   },
@@ -138,14 +138,21 @@ export const passwordRules = [
       const romanMap: { [key: string]: number } = {
         I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000,
       };
+  
+      // Extract all Roman numeral characters from the password
       const romanNumerals = password.match(/[IVXLCDM]/gi) || [];
+  
+      // Calculate the sum of Roman numeral values
       const sum = romanNumerals
         .map((char) => romanMap[char.toUpperCase()])
         .reduce((total, value) => total + value, 0);
+  
+      // Return true if the sum equals 35, otherwise false
       return sum === 35;
     },
     errorMessage: "The sum of all Roman numeral values in the password must equal 35",
-  },
+  }
+  ,
   {
     id: 14,
     description: "The product of all numbers must be greater than 10,000",
