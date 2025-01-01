@@ -42,3 +42,4 @@ dist-ssr
 *.sw?
 firebase_admin.json
 /firebase_admin.json
+temp.py
