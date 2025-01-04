@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
+import { Link} from 'react-router-dom';
 import { z } from 'zod';
 import { Gamepad2 } from 'lucide-react';
-import { login } from '@/service/Auth';
 import { SigninForm } from '@/components/layout/SigninForm';
 
 const loginSchema = z.object({
@@ -28,7 +25,7 @@ export const LoginPage: React.FC = () => {
             Sign in to your account to continue
           </p>
         </div>
-        <SigninForm/>
+        <SigninForm />
       </div>
     </div>
   );
