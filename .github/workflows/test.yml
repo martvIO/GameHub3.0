@@ -22,15 +22,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-      
-    # Step 3
-    - name: Going to the GameHub Directory
-      run: cd GameHub
 
-    # Step 4: Install Node.js dependencies
+    # Step 3: Install Node.js dependencies
     - name: Installing Node.js dependencies
-      run: npm install
+      run: |
+        cd GameHub
+        npm install
 
-    # Step 5: Run Node.js tests
+    # Step 4: Run Node.js tests
     - name: Running Node.js tests
-      run: npm test
+      run: |
+        cd GameHub
+        npm test
