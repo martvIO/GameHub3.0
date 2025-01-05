@@ -1,7 +1,7 @@
 # Entry point for the FastAPI app
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import user  # Import routes
+from routes import user  # Import routes
 
 # FastAPI app instance
 app = FastAPI(debug=True)

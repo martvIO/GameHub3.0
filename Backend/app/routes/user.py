@@ -1,8 +1,8 @@
 # User-related routes (signup, login, get_user)
 from fastapi import APIRouter, HTTPException, Header
-from app.models import SignupRequest, LoginRequest
-from app.firebase import get_firebase_ref, get_user_by_email, get_user_by_username
-from app.auth import hash_password, verify_password, create_jwt_token, verify_jwt_token
+from models import SignupRequest, LoginRequest
+from firebase import get_firebase_ref, get_user_by_email, get_user_by_username
+from auth import hash_password, verify_password, create_jwt_token, verify_jwt_token
 
 router = APIRouter()
 

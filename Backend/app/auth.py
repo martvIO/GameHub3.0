@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from jose import jwt
 from fastapi import HTTPException
-from app.utils import get_env_variable
+from utils import get_env_variable
 
 # JWT and password hashing configuration
 JWT_SECRET = get_env_variable("SECRET_KEY")

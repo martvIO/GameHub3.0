@@ -2,7 +2,7 @@
 import firebase_admin
 from firebase_admin import credentials, initialize_app, db
 from typing import Optional
-from app.utils import get_env_variable
+from utils import get_env_variable
 
 firebase_database_url = get_env_variable("FIREBASE_DATABASE_URL")
 firebase_admin_cert = get_env_variable("FIREBASE_CREDENTIALS")
