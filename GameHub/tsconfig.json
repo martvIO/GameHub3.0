@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "baseUrl": ".", // Base directory for relative paths
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"] // Alias '@/' maps to 'src/'
+      "@/*": ["src/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "target": "ES2021",       // Updated to a more modern target
+    "lib": ["ES2021", "DOM"], // Ensure Array methods like `includes` are supported
+    "module": "CommonJS",
+    "strict": true,
+    "moduleResolution": "node"
   },
-  "include": ["src/**/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

@@ -12,6 +12,10 @@ node_modules/
 
 __pycache__/
 
+.pytest_cache/
+/api/tests/__pycache__/
+/api/__pycache__/
+
 # Logs
 logs
 *.log

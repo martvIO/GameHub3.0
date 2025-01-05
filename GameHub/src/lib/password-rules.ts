@@ -144,7 +144,7 @@ export const passwordRules = [
     id: 14,
     description: "The product of all numbers must be greater than 10,000",
     validator: (password: string) => {
-      const numbers = password.match(/\d/g)?.map(Number) || [];
+      const numbers = password.match(/\d+/g)?.map(Number) || [];
       if (numbers.length === 0) return false;
       const product = numbers.reduce((prod, num) => prod * num, 1);
       return product > 10_000;
@@ -163,5 +163,5 @@ export const passwordRules = [
     },
     errorMessage: "password should contain only valid words"
   },
-] as const;
+];
 
