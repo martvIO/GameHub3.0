@@ -92,7 +92,7 @@ describe("Password Rules Functional Tests", () => {
       ruleId: 15,
       description: "The password must only contain valid words",
       validPassword: "hello world",
-      invalidPassword: "invalid#word123",
+      invalidPassword: "invalid#wrd123",
     },
   ];
 
