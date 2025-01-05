@@ -18,7 +18,7 @@ export const RulesList: React.FC<RulesListProps> = ({ rules, currentPassword }) 
   });
 
   return (
-    <div className="space-y-3">
+    <section className="Rule-List space-y-3">
       {sortedRules.map((rule, index) => {
         const isValid = rule.validator(currentPassword);
 
@@ -51,6 +51,6 @@ export const RulesList: React.FC<RulesListProps> = ({ rules, currentPassword }) 
           </motion.div>
         );
       })}
-    </div>
+    </section>
   );
 };

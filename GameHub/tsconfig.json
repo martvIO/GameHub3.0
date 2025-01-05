@@ -7,11 +7,11 @@
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "target": "ES2021",       // Updated to a more modern target
-    "lib": ["ES2021", "DOM"], // Ensure Array methods like `includes` are supported
+    "target": "ES2021",
+    "lib": ["ES2021", "DOM"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "module": "CommonJS",
-    "strict": true,
-    "moduleResolution": "node"
+    "strict": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
